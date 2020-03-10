@@ -1,4 +1,3 @@
-
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -41,7 +40,7 @@ app.get("/login", function(req, res) {
 
   // your application requests authorization
   const scope =
-  'streaming user-read-email user-read-private user-modify-playback-state user-read-playback-state'
+    "streaming user-read-email user-read-private user-modify-playback-state user-read-playback-state";
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
@@ -88,21 +87,9 @@ app.get("/callback", function(req, res) {
     };
 
     request.post(authOptions, function(error, response, body) {
-      console.log(body);
       if (!error && response.statusCode === 200) {
         var access_token = body.access_token,
           refresh_token = body.refresh_token;
-
-        var options = {
-          url: "https://api.spotify.com/v1/me",
-          headers: { Authorization: "Bearer " + access_token },
-          json: true
-        };
-
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          console.log(body);
-        });
 
         // we can also pass the token to the browser to make requests from there
         res.redirect(
@@ -154,5 +141,4 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-console.log("Listening on 8888");
-app.listen(8888);
+app.listen((process.env.PORT || 8888));
