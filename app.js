@@ -62,7 +62,9 @@ app.get("/callback", function(req, res) {
   var storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect(process.env.CLIENT_REDIRECT_URI + "?" +
+    res.redirect(
+      process.env.CLIENT_REDIRECT_URI +
+        "?" +
         querystring.stringify({
           error: "state_mismatch"
         })
@@ -139,4 +141,4 @@ app.get("/refresh_token", function(req, res) {
   });
 });
 
-app.listen((process.env.PORT || 8888));
+app.listen(process.env.PORT || 8888);
